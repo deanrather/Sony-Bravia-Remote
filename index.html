@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+    <!--
+        MIT Licence
+        Dean Rather 2015
+    -->
+    <head>
+        <title>Sony Bravia Remote</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <style>
+            form {text-align: center;}
+            .form-control {width: 14em;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>Sony Bravia Remote Control</h1>
+                    <form>
+                        <p><label for="IP">TV IP</label><input type="text" class="form-control" id="IP" placeholder="TV IP" value="192.168.0.2"></p>
+                        <p><button type="button" data-code="??????????????????==" class="btn btn-success">ON</button></p>
+                        <p><button type="button" data-code="AAAAAQAAAAEAAAAvAw==" class="btn btn-danger">OFF</button></p>
+                        <p><button type="button" data-code="AAAAAgAAAHcAAAANAw==" class="btn btn-warning">TV</button></p>
+                        <p><button type="button" data-code="AAAAAgAAABoAAABaAw==" class="btn btn-warning">HDMI1 (?)</button></p>
+                        <p><button type="button" data-code="AAAAAgAAABoAAABbAw==" class="btn btn-warning">HDMI2 (Xbone)</button></p>
+                        <p><button type="button" data-code="AAAAAgAAABoAAABcAw==" class="btn btn-warning">HDMI3 (WiiU)</button></p>
+                        <p><button type="button" data-code="AAAAAgAAABoAAABdAw==" class="btn btn-warning">HDMI4 (PC)</button></p>
+                        <p><button type="button" data-code="AAAAAQAAAAEAAAAUAw==" class="btn btn-info">MUTE</button></p>
+                        <p><button type="button" data-code="AAAAAQAAAAEAAAASAw==" class="btn btn-info">VOL UP</button></p>
+                        <p><button type="button" data-code="AAAAAQAAAAEAAAATAw==" class="btn btn-info">VOL DOWN</button></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+        window.onload = function () {
+            
+            $("button").click(function(event) {
+
+                var code = $(this).data('code');
+                var IP = $("#IP").val();
+
+                var API = 'http://' + IP + '/IRCC?';
+
+                var request_body = buildRequestBody(code);
+                console.log('code:', code);
+                console.log('API:', API);
+                console.log('Request Body:', request_body);
+
+                $.ajax
+                (
+                    {
+                        type:           'POST',
+                        contentType:    'text/plain',
+                        url:            API,
+                        data:           request_body,
+                        success:        function(rtn){ displayResults(rtn); },
+                        error:          function(rtn){ displayResults(rtn); }
+                    }
+                )
+            });
+            
+            displayResults = function(results)
+            {
+                 console.log(results);
+            }
+
+            buildRequestBody = function(code)
+            {
+                return '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:X_SendIRCC xmlns:u="urn:schemas-sony-com:service:IRCC:1"><IRCCCode>' + code + '</IRCCCode></u:X_SendIRCC></s:Body></s:Envelope>';
+            }
+
+            /**
+             * Needs to be done at least once first.
+             * Doesn't seem to hurt running it several times.
+             */
+            function registerDevice() {
+
+                var IP = $("#IP").val();
+                var API = 'http://' + IP + '/cers/api/register?name=JS%20Remote&registrationType=initial&deviceId=MediaRemote';
+
+                $.ajax
+                (
+                    {
+                        url:            API,
+                        success:        function(rtn){ displayResults(rtn); },
+                        error:          function(rtn){ displayResults(rtn); }
+                    }
+                )
+            }
+            registerDevice();
+
+        }
+        </script>
+    </body>
+    <!--
+        http://stackoverflow.com/questions/21651956/sony-tv-remote-control-over-upnp
+        http://amit.chakradeo.net/2008/12/17/sony-bravia-internet-link-unofficial-api/
+        https://wolstenhol.me/blog/using-tasker-autovoice-yatse-and-xbmc
+        http://www.openremote.org/display/forums/Sony+TV+HTTP+control
+        https://github.com/shabunin/cf-sonytv/tree/master/scripts
+        http://192.168.0.2:52323/dmr.xml
+        http://192.168.0.2/cers/ActionList.xml
+        http://192.168.0.2/cers/api/register?name=METAL-DEAN&registrationType=initial&deviceId=MediaRemote
+        http://stackoverflow.com/questions/21651956/sony-tv-remote-control-over-upnp
+        http://192.168.0.2:80/cers/api/getRemoteCommandList
+    -->
+</html>
