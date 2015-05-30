@@ -7,7 +7,7 @@ Just browse to http://deanrather.github.io/Sony-Bravia-Remote/, put in your TV's
 
 Debug information can be found in the debug console (`F12`).
 
-Some models require a different API endpoint, check out the URL's at the bottom of the index.html.
+Some models require a different API endpoint, check out the URL's in [Refs.md].
 
 This works for my `SONY BRAVIA KDL-60EX720`
 

@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
     <!--
-        MIT Licence
         Dean Rather 2015
+        MIT Licence
+        https://github.com/deanrather/Sony-Bravia-Remote/
     -->
     <head>
         <title>Sony Bravia Remote</title>
@@ -21,10 +22,10 @@
                     <h1>Sony Bravia Remote Control</h1>
                     <form>
                         <p><label for="IP">TV IP</label><input type="text" class="form-control" id="IP" placeholder="TV IP" value="192.168.0.2"></p>
-                        <p><button type="button" data-code="??????????????????==" class="btn btn-success">ON</button></p>
+                        <p><button type="button" data-code="AAAAAQAAAAEAAAAVAw==" class="btn btn-success">ON</button></p>
                         <p><button type="button" data-code="AAAAAQAAAAEAAAAvAw==" class="btn btn-danger">OFF</button></p>
                         <p><button type="button" data-code="AAAAAgAAAHcAAAANAw==" class="btn btn-warning">TV</button></p>
-                        <p><button type="button" data-code="AAAAAgAAABoAAABaAw==" class="btn btn-warning">HDMI1 (?)</button></p>
+                        <p><button type="button" data-code="AAAAAgAAABoAAABaAw==" class="btn btn-warning">HDMI1 (BD)</button></p>
                         <p><button type="button" data-code="AAAAAgAAABoAAABbAw==" class="btn btn-warning">HDMI2 (Xbone)</button></p>
                         <p><button type="button" data-code="AAAAAgAAABoAAABcAw==" class="btn btn-warning">HDMI3 (WiiU)</button></p>
                         <p><button type="button" data-code="AAAAAgAAABoAAABdAw==" class="btn btn-warning">HDMI4 (PC)</button></p>
@@ -56,6 +57,10 @@
                         type:           'POST',
                         contentType:    'text/plain',
                         url:            API,
+                        headers:        {
+                            'X-CERS-DEVICE-ID': 'MediaRemote',
+                            'X-CERS-DEVICE-INFO': 'test'
+                        },
                         data:           request_body,
                         success:        function(rtn){ displayResults(rtn); },
                         error:          function(rtn){ displayResults(rtn); }
@@ -96,18 +101,4 @@
         }
         </script>
     </body>
-    <!--
-        http://stackoverflow.com/questions/21651956/sony-tv-remote-control-over-upnp
-        http://amit.chakradeo.net/2008/12/17/sony-bravia-internet-link-unofficial-api/
-        https://wolstenhol.me/blog/using-tasker-autovoice-yatse-and-xbmc
-        http://www.openremote.org/display/forums/Sony+TV+HTTP+control
-        https://github.com/shabunin/cf-sonytv/tree/master/scripts
-        http://192.168.0.2:52323/dmr.xml
-        http://192.168.0.2/cers/ActionList.xml
-        http://192.168.0.2/cers/api/register?name=METAL-DEAN&registrationType=initial&deviceId=MediaRemote
-        http://stackoverflow.com/questions/21651956/sony-tv-remote-control-over-upnp
-        http://192.168.0.2:80/cers/api/getRemoteCommandList
-        http://192.168.0.2/cers/api/getSystemInformation
-        http://192.168.0.2:52323/MediaRenderer_32x32.jpg
-    -->
 </html>
