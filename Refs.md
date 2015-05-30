@@ -12,6 +12,7 @@
 - http://192.168.0.2:80/cers/api/getRemoteCommandList
 - http://192.168.0.2/cers/api/getSystemInformation
 - http://192.168.0.2:52323/MediaRenderer_32x32.jpg
+- https://github.com/KHerron/SonyAPILib/
 - https://github.com/chr15m/media-remote/blob/master/SNIFF.md
 
 Get Command List:
